@@ -1,0 +1,577 @@
+\clearpage
+\section{Introduction to Java}
+
+This chapter should serve as a Java reference throughout this course (and perhaps the CS126 course later this academic year). In this chapter the basic building blocks of Java programs will be outlined, with some short examples interspersed. If you have a question related to your coursework or exercise sheets, you should consult this chapter before asking for help from your seminar tutor.
+
+Before we start discussing the ins and outs of Java, it's good to have a basic template in which to write all your code. Everything in Java is contained within a ``class'' (something that will be discussed fully later) and when a program is executed, as you will have done in Chapter 2, the Java environment looks for a particular method for an entry point to your code. For this quick introduction, you should create a file with the .java extension, and you should create a class in this file with a {\tt main} method. The \emph{main} method you write should have a specific function signature, where it should be declared {\tt public}, {\tt static} and {\tt void}, and it should have a single parameter that is an array of String objects. Specifically, your initial class declaration should look something like this,
+
+\begin{verbatim}
+public class MyClass {
+public static void main(String[] args) {
+...
+}
+}
+\end{verbatim} 
+
+After writing some logic in your main function, you can compile and execute the program as before.
+
+\subsection{Variables}
+
+In Java, we can use variables to store data, such that it can be reused or changed. Variable must be declared prior to their use and are given a symbolic name, and a \emph{type}. In this course you will use three forms of variables: \emph{primitive} variables, \emph{object} variables and \emph{arrays}.
+
+\subsubsection*{Primitives}
+
+\noindent
+Java contains 8 primitive types that are the building blocks of all other types in Java. There are four \emph{integer} types, two {real} types, a character type and a boolean type. Specifically the primitive Java types are:
+
+\begin{description}[style=multiline,leftmargin=2cm,font=\normalfont]
+	\item[\tt byte] 8-bit integer type that can represent values between $-2^7$ and $2^7-1$. 
+	\item[\tt short] 16-bit integer type that can represent values between $-2^{15}$ and $2^{15}-1$.
+	\item[\tt int] 32-bit integer type that can represent values between $-2^{31}$ and $2^{31}-1$.
+	\item[\tt long] 64-bit integer type that can represent values between $-2^{63}$ and $2^{63}-1$.
+	\item[\tt float] 32-bit floating point type that can store approximately 6 digits of precision.
+	\item[\tt double] 64-bit floating point type that can store approximately 15 digits of precision.
+	\item[\tt char] 16-bit type that can represent any character in the UTF-16 character set.
+	\item[\tt boolean] a type that can represent either {\tt true} or {\tt false}.
+\end{description}
+
+After deciding on an appropriate type, a variable needs a name, and possibly an initial value. The variable name can be any string of characters and number but cannot start with a number. Furthermore, variables can contain the underscore character ({\tt \_}) and a dollar sign ({\tt \$}), though its generally advised to not use dollar, and to not start a variable name with an underscore. Some names are also reserved; for example, a variable called {\tt int} would be incredibly confusing to the Java compiler, as well as a programmer.\\
+
+Finally, a variable must be given a value before being used in subsequent statements. Variables are assigned using the \emph{assignment operator}, {\tt =}. Unlike in the world of mathematics, in most programming languages the value on the right, is assigned to the variable named on the left. For example $(1 + 2) \times 3 = x$ would be written in Java as: \\
+
+\indent
+{\tt int x = (1 + 2) * 3;}\\
+
+\noindent
+{\bf Exercise}\\
+
+\noindent
+Think about what each type above might be used for, e.g., the worlds population would require a {\tt long}, as it exceeds the range of an {\tt int}.\\
+
+\noindent
+The radius of the earth is approximately 6,371 km; the population is approximately 7,046,000,000 people. Try writing some Java statements to calculate the population density of the earth.
+
+\begin{verbatim}
+long population = 7046000000;
+int earthRadius = 6371000;
+double pi = Math.PI;
+double surfaceArea = ...
+\end{verbatim}
+
+\subsubsection*{Objects}
+
+There will be a more in-depth discussion of objects later in this guide, but one object variable you will come across is the String type. Object variable types usually start with a capital letter and are built from primitive variables. For instance, the String type stores all its data in arrays of {\tt char} types. Interaction with object types is usually done using the methods contained within the class. For example,
+
+\begin{verbatim}
+String s = "THIS IS A STRING";
+System.out.println(s.toLowerCase());
+System.out.println("The string is " + s.length() + " characters long");
+\end{verbatim}
+
+\noindent
+The Java documentation is a great source to find what operations are valid on all of Java's in-built object types. Later in the course you will be designing and using your own object types.\\
+
+\noindent
+{\bf Exercise}\\
+
+\noindent
+Find the Javadoc documentation for the String class using google and find out how to find which character is at position $n$.
+
+\subsubsection*{Arrays}
+
+Finally, Java contains a special type for storing collections of similar objects. Arrays are declared in the same way as previous variable types but square brackets are used to indicate that there will be a collection of these objects. Further, arrays need to be given a length and from this point accessing individual items requires an index value. For example,
+
+\begin{verbatim}
+int myArray[] = new int[3];
+myArray[0] = 3;
+myArray[1] = 2;
+myArray[2] = 3;
+\end{verbatim}
+
+\noindent
+The {\tt new} keyword is used to initialise both object types and array types, and with arrays, requires a predefined size. Arrays in nearly all programming language begin at 0 and therefore the last item can be found at the location $n-1$, where $n$ is the length. In Java, the length of an array can be determined by checking the {\tt length} field of the array, e.g., {\tt myArray.length}.
+
+\subsubsection*{Variable scope}
+
+The final thing to say about variables right now is that they are very temporal creatures. They exist for a very limited amount of time, determined by their \emph{scope}. Specifically, from the point at which a variable is declared, it only exists within its enclosing braces. Variables declared outside of methods are called ``instance variables'' or ``class variables''. The difference between these two things will be discussed in lectures, but these variables maintain their values between different functions. Consider the following,
+
+\begin{verbatim}
+public class MyClass {
+int instanceVar = 3;
+
+public static void main(String[] args) {
+int functionVar = 4;
+}
+
+public int myMethod() {
+int functionVar = 5;
+}
+}
+\end{verbatim}
+
+\noindent
+The variable {\tt instanceVar} exists throughout the whole class with the same value everywhere; a change to its value in {\tt myMethod}, would be reflected within all other methods. The two instances of {\tt functionVar} on the other hand only have scope from the point at which they are declared until the closing brace. Their values are independent and changing the value in {\tt myMethod} will not affect the other variable declared in the {\tt main} method. Variable scope will be covered more thoroughly in lectures; but the take away message is that variables have limited scope and cannot be accessed everywhere. Additionally, two variables with the same name may be allowed to coexist, providing their scopes do not overlap.
+
+\subsection{Conditional statements}
+
+Java programs are executed in-order, that is to say that when a Java application is executed, each line of code is executed in turn starting with the first statement in the {\tt main} method. There are often occasions where we do not want each line to be executed, for instance if we ask the user for two numbers and want to perform a division with them, if one of them is zero it is likely we do not want to perform a division by zero. To control the flow of Java applications, we use conditional statements.
+
+\paragraph{If-statements} An if-statement is the simplest and most common conditional statement in Java and simply uses a condition that evaluates to true or false and executes code accordingly. To make an application execute one statement or another, an else statement can be attached to the end of the if-statement. Furthermore, you can join an if and an else statement to encode three possible choices. The basic format of an if-statement is:
+
+\begin{verbatim}
+if (condition) {
+...
+} else {
+...
+}
+\end{verbatim}
+
+\noindent
+For example,
+
+\begin{verbatim}
+if (a < 0) {
+System.out.println("a is less than zero!");
+} else if (a == 0) {
+System.out.println("a is equal to zero!");
+} else {
+System.out.println("a is more than zero!");
+}
+\end{verbatim}
+
+\noindent
+Conditions can also be chained using boolean algebra, where {\tt \&\&} indicates a logical-AND, and {\tt ||} indicates a logical-OR. Boolean conditions can be ``lazy'' or ``strict'', where a single {\tt \&} or {\tt |} character indicates strict evaluation and two characters indicate lazy evaluation. The distinction between these will be covered in lectures. When using complicated conditions in if-statements, be sure to bracket carefully to ensure clarity. For example,
+
+\begin{verbatim}
+if ((a == 0) && (b == 0)) {
+System.out.println("Both a and b are 0!");
+}
+\end{verbatim}
+
+\paragraph{Switch-statement}
+
+The {\tt switch} statement is similar to an if statement evaluating the value of a specific variable to a specific value. However, the switch statement can behave in a more complicated way by allowing code to `drop through' many conditions. The basic format of a switch statement is:
+
+\begin{verbatim}
+switch (variable) {
+case 1: ...
+break;
+case 2: ...
+...
+default: ...
+}
+\end{verbatim}
+
+\noindent
+With a statement of this kind, Java will look at the value of the variable, check if there is a specific case statement for its value, and begin executing instructions from this point onwards. If Java encounters a {\tt break} statement, it will skip to the end of the switch statement and continue with the application. Because a break statement is required to stop code from executing, if there is no break between two cases, Java may execute the code for both cases even through only the first matched the variable. If no cases are matched, the {\tt default} case will be executed, unless it is absent.\\
+
+\noindent
+{\bf Exercise}\\
+
+\noindent
+Try converting the following if statement into a switch statement, using the fact that a switch statement will drop through many conditions when there is no break statement:
+
+\begin{verbatim}
+if ((a == 1) || (a == 2) {
+System.out.println("a is one or two");
+} else if (a == 3) {
+System.out.println("a is three");
+} else {
+System.out.println("a is neither one, two or three");
+}
+\end{verbatim}
+
+\noindent
+Now try converting the following switch statement into an if statement:
+
+\begin{verbatim}
+switch (a) {
+case 5:
+case 7:
+case 8: System.out.println("a is five, seven or eight");
+break;
+case 1: System.out.println("a is one");
+case 2: System.out.println("a is two");
+break;
+default: System.out.println("a is something else");
+}
+\end{verbatim}
+
+\subsection{Iteration statements}
+
+While coding Java applications you may find that you end up repeating yourself. Repeated code can be encapsulated into an iteration statement to make Java execute the same code multiple times. Consider,
+
+\begin{verbatim}
+int a = 1;
+System.out.println("a is: " + a);
+a = a + 1;
+System.out.println("a is: " + a);
+a = a + 1;
+System.out.println("a is: " + a);
+a = a + 1;
+\end{verbatim}
+
+\noindent
+Using an iteration statement this code can be condensed to many fewer lines, and the repeated action can be increased without having to add additional lines of code. As with almost all coding, this can be achieved in multiple ways. In this course we will deal with while loops and for loops, as well as some variants on these.
+
+\subsubsection*{While-loops}
+
+A while loop can be thought of as a repeating if statement, where the body of the if will be continually executed until the condition is no longer met. Specifically they are coded like so:
+
+\begin{verbatim}
+while (condition) {
+...
+}
+\end{verbatim}
+
+\noindent
+To encode the previous code into a while loop we may do something like the following,
+
+\begin{verbatim}
+int a = 1;
+while (a < 4) {
+System.out.println("a is: " + a);
+a = a + 1;
+}
+\end{verbatim}
+
+\noindent
+When using while loops, you should be careful to ensure that the condition changes, otherwise an infinite loop may exist in which the program will continually execute the middle block without ever finishing. Consider what might happen if you removed the statement {\tt a = a + 1} in the example above. The code would print {\tt a is: 1} until the end of time, and this was probably not what was required.\\
+
+\noindent
+There are some cases where you would like the condition to be evaluated \emph{after} the body has been executed, ensuring that the body will be executed at least once. For this we can use a do-while loop like so:
+
+\begin{verbatim}
+do {
+...
+} while (condition);
+\end{verbatim}
+
+\noindent
+A good reason to use a statement like this would be if you wanted to assign a value to a variable and change it only under certain conditions. You may find this form of loop beneficial for the robot-maze coursework. Consider the following example,
+
+\begin{verbatim}
+double a;
+do {
+a = Math.random();
+} while (a < 0.5);
+\end{verbatim}
+
+\noindent
+This would pick a random number for {\tt a} and then continually pick new a one until {\tt a} is greater than or equal to 0.5.
+
+\subsubsection*{For-loops}
+
+Sometimes you may want a loop to iterate a variable over a very specific range of numbers, or for a specific number of times. While this is possible with a while-loop, for these situations we often use a for loop. A for loop is written using three components: an initial condition, an terminating condition and an iterative operation. For example,
+
+\begin{verbatim}
+for (initial condition; termination condition; iteration operation) {
+...
+}
+\end{verbatim}
+
+\noindent
+Rewriting the while loop at the beginning of this section as a for loop would make for even more concise code, as the variable declaration and incrementation operation are included as part of the loop.
+
+\begin{verbatim}
+for (int a = 1; a < 4; a = a + 1) {
+System.out.println("a is: " + a);
+}
+\end{verbatim}
+
+\noindent
+{\bf Exercises} \\
+
+\noindent
+Rewrite the following for-loop as a while-loop:
+
+\begin{verbatim}
+for (int a = 10; i > 0; i = i-2) {
+System.out.println("i is: " + i);
+}
+\end{verbatim}
+
+\noindent
+Given the following code, copy the characters out of the String {\tt s}, in to the {\tt char} array {\tt c}. Use the Javadoc for String to find out how to retrieve individual letters from {\tt s}. Try using both a while and a for-loop.
+
+\begin{verbatim}
+String s = "This is a string";
+char c[] = new char[s.length()];
+...
+\end{verbatim}
+
+\subsection{Input and output}
+
+Computer systems normally have three ``streams'' that can perform input and output (I/O) to and from the users console. Two of these streams are for writing data out, and they are the output stream and the error stream, and the final stream is the input stream. In Java these can be found under the {\tt System} class as {\tt System.out}, {\tt System.err} and {\tt System.in}. We've already been writing out to the \emph{output} stream using the {\tt println()} method; you can write out on the error stream in the same way, but instead of {\tt System.out}, we use {\tt System.err.println("...");}. To find more things you can do with {\tt System.out} and {\tt System.err}, you can look up the {\tt PrintStream} Java documentation. You should find a method called {\tt print()} that works like {\tt println()}, but doesn't put a line-break at the end; this can be used to build strings on the output, instead of concatenating things beforehand. For example:
+
+\begin{verbatim}
+String s = "This"
+s = s + " is a string";
+System.out.println(s);
+
+System.out.print("This");
+System.out.print(" is a string");
+System.out.println();
+\end{verbatim}
+
+\noindent
+Both bits of code will produce the same output, but the second can be done over the course of an exercise without subsequent additions being placed on new lines.\\
+
+\noindent
+For input streams, data has to be read either byte-by-byte or by using another class to do this for us. Luckily, Java provides the {\tt Scanner} class exactly for this purpose. First, a Scanner object is created and assigned to a variable, and then its methods can be called to retrieve user input. For example:
+
+\begin{verbatim}
+Scanner sc = new Scanner(System.in);
+long aLong = sc.nextLong();
+double aDouble = sc.nextDouble();
+\end{verbatim}
+
+\noindent
+This will first read in a value as a long and then read a value as a double. Explore the {\tt Scanner} documentation to find more interesting uses of Scanner before proceeding to the following exercise.\\
+
+\noindent
+{\bf Exercise}\\
+
+\noindent
+Using your knowledge of loops and the documentation for Scanner, use the {\tt nextDouble()} and {\tt hasNextDouble()} to read in numbers until something that is not a number is encountered and then output the total of the doubles encountered. Your output should look something like this:
+
+\begin{verbatim}
+Enter double: 4.5
+Enter double: 5.2
+Enter double: blah
+The total of the doubles entered was: 9.7
+\end{verbatim}
+
+\subsection{Methods}
+
+You've already been using methods throughout this chapter. You differentiate methods from variables by the use of the following brackets, {\tt ()}. Breaking down problems into subproblems, you may find that some operations are repeated; extracting these behaviours into methods allows sensible code reuse, decreasing the amount of coding required and facilitating future extensions. In Java, the terms method, function and subroutine are used interchangeably, though outside of the Java-world, their definitions vary subtly. All methods in Java have a name, a list of parameters and a return type. There is a special type that can be used when no return value is required, we call this type {\tt void}. You've already seen a {\tt void} function in Java, as the {\tt main} method does not return any value to the computer. Further to this, methods also require an \emph{access modifier} ({\tt public}, {\tt private} or {\tt protected}), which we will cover in the next section. The basic format of all function declarations follows the following form:
+
+\begin{verbatim}
+[access] [type] methodName([type] varName, [type] varName, ...) {
+...
+}
+\end{verbatim}
+
+\noindent
+Where {\tt access} is either {\tt public}, {\tt private}, or {\tt protected}, and {\tt type} is a variable type. Thus, a basic add function that takes two inputs and returns the sum of the two may look something like:
+
+\begin{verbatim}
+public int add(int a, int b) {
+return a + b;
+}
+\end{verbatim}
+
+
+\noindent
+Here the method is made public and will return an integer value. There are two inputs to the method, called {\tt a} and {\tt b}, and they are also integer values. Java requires that methods which have a non-void return type, explicitly return a value using the {\tt return} keyword. You would call this method and provide two values (or variables) to the method with a function call like so:
+
+\begin{verbatim}
+int c = add(3, 4);
+\end{verbatim}
+
+\noindent
+As state previously, some methods may not need to return a value and can be declared {\tt void}. For example, if a method writes a String to the screen, it may not need to return a value to the program:
+
+\begin{verbatim}
+public void printError(String errorstring, int errornumber) {
+System.err.println("Error number " + errornumber +
+": " + errorstring);
+}
+\end{verbatim}
+
+\noindent
+{\bf Exercise}\\
+
+\noindent
+Given the formula:
+$$x = \displaystyle\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+
+\noindent
+Write a function to calculate $x$. You may want to look up the Math java documentation to find methods for square root and powers. You may also require two functions, one to return the result with a positive determinant, one for the negative case. Unless you're feeling very brave, ignore the cases where there are complex roots.
+
+\subsection{Object-oriented programming}
+
+In Java, whether you've realised or not, (almost) everything is an object. You've been writing classes, which you can think of as a blueprint for an object. Specifically, an object is an instance of a class and is initialised with the {\tt new} keyword. Consider the Scanner class:
+
+\begin{verbatim}
+Scanner sc = new Scanner(System.in);
+\end{verbatim}
+
+\noindent
+This is creating an object variable called {\tt sc}, and it is initialising it to be a new instantiation of the Scanner class. Furthermore, it is calling a special method that exists in the Scanner class called a \emph{constructor}. Constructor methods have the same name as the containing class, and have no return type. These methods are used to initialise instance variables (i.e. variables with scope across an entire instance of a class) and potentially call some set up functions. From this point on the object can be used much like the Scanner class is used, calling functions by using the instance variable name, a stop and the name of the function ending with bracketed parameters. Consider the following example:
+
+\begin{verbatim}
+public class MyClass1 {
+public static void main(String[] args) {
+MyClass2 mc = new MyClass2(4);
+System.out.println(mc.getA());
+}
+}
+
+class MyClass2 {
+private int a;
+public MyClass2(int a) {
+this.a = a;
+}
+
+public int getA() {
+return a;
+}
+}
+\end{verbatim}
+
+\noindent
+This example contains two classes, {\tt MyClass1} and {\tt MyClass2}. The first class has a main method and is therefore where execution begins. It creates an object called {\tt mc}, and initialises it using the {\tt MyClass2} constructor method to set the instance variable {\tt a}. As {\tt a} is declared twice in the class, the {\tt this} keyword is used to differentiate between the instance variable {\tt a} and the method variable {\tt a}; {\tt this.a} refers to the instance variable, whereas {\tt a} refers to the parameter passed to the constructor method.\\
+
+\noindent
+After creating the object, the method {\tt getA()} is used to get the value of {\tt a} and return it such that it can be printed with the {\tt println()} function.
+
+\subsubsection*{Access modifiers}
+
+If you've been paying careful attention so far, you'll have noticed that words such as {\tt private} and {\tt public} have been dotted around before variable and method declarations. These are fundamental features of all object-oriented programming languages and allow us to make use of \emph{encapsulation}. When writing object oriented code, we generally follow the rule of {\bf private variables, public methods}. What this means is that our class variables must be private and can therefore only be changed by method in the class. Imagine a ATM system that is programmed like this:
+
+\begin{verbatim}
+public class BankAccount {
+String name;
+long accountNumber;
+double balance;
+...
+public double withdrawFunds(double amount) {
+if (balance > amount) {
+balance = balance - amount;
+return amount;
+} else {
+System.err.println("You do not have enough money!");
+return 0;
+}
+}
+}
+\end{verbatim}
+
+\noindent
+Money is withdrawn from the machine using the {\tt withdrawFunds()} method, which can check the available balance beforehand and warn the user if a transaction is not allowed. In this example the instance variables are not given an access modifier and are therefore implicitly \emph{public} and can be changed by another class like so:
+
+\begin{verbatim}
+BankAccount b = new BankAccount("Bob", 1235323, 1000.0);
+b.balance = b.balance - 1100.0;
+\end{verbatim}
+
+\noindent
+Here, the balance variable has been manipulated directly and so no check has been made to see if the action is valid. If the variables are made \emph{private}, then we can only manipulate them using predefined methods that can perform additional operations. Therefore, it would be better to write this class like so:
+
+\begin{verbatim}
+public class BankAccount {
+private String name;
+private long accountNumber;
+private double balance;
+...
+}
+\end{verbatim}
+
+\noindent
+This is not to say that all your variables should be private and all your methods should be public. Infact, the safest way to program is to make all things private unless external access is required (i.e. you have another class that needs to perform a particular action).
+
+\subsubsection*{Inheritance}
+
+The final thing to say on object oriented programming in this quick-stop guide is on the subject of \emph{inheritance}. One of the most powerful facets of Java and other object oriented programming languages is that you can create classes that inherit properties and methods from other classes, allowing you to take advantage of existing code and allowing you to build an object hierarchy. This may seem strange but consider the furniture you have at home. Many of the items share some properties and functions but also require some different properties. Let's create a class for furniture.
+
+\begin{verbatim}
+public class Furniture {
+private String material;
+private double weight;
+...
+}
+\end{verbatim}
+
+\noindent
+Now think about your dining room table and chairs. They're both forms of furniture, but they have different properties, thus we can {\tt extend} the Furniture class and inherit the methods and properties that all items of furniture share, and add our new functions and properties.
+
+\begin{verbatim}
+public class Chair extends Furniture {
+private short numberOfLegs;
+...
+}
+
+public class Table extends Furniture {
+private short numberOfLegs;
+private int length;
+private int width;
+...
+}
+\end{verbatim}
+
+\noindent
+We can even extend the extended classes, to create a specialisation for an office chair, or a stool, or an exam desk with an integrated chair!\\
+
+\noindent
+{\bf Exercise}\\
+
+\noindent
+Starting with a class for animals, try writing a series of classes for cats, dogs, spiders and flies. It may be beneficial to have intermediate classes such as a Mammals class. Don't worry too much about the implementation of the functions, just think about how properties are shared by all of the subclasses.
+
+\subsection{Debugging Java}
+
+The final section of this whistle-stop tour of Java is perhaps the most important of all. When you encounter problems with the code you have written, before approaching a seminar tutor, your friends or me, you should attempt to fix the problem yourself. Luckily, Java provides perhaps the best, most informative error messages of all compilers/programming languages. Consider the following code (with added line numbers!):
+
+\begin{verbatim}
+1: public class Test {
+2:    public static void main(String[] args) {
+3:        System.out.println(a);
+4:    }
+5: }
+\end{verbatim}
+
+\noindent
+If we try to compile this code, we get an error message like so:
+
+\begin{verbatim}
+$ javac Test.java
+Test.java:3: error: cannot find symbol
+System.out.println(a);
+^
+symbol:   variable a
+location: class Test
+1 error
+\end{verbatim}
+
+\noindent
+Here we see that the Java compiler has told us that the error is in Test.java and is on line 3. The error ``cannot find symbol'' means that a particular variable or method (which Java calls symbols) cannot be found. Furthermore, the compiler tells us which symbol it cannot find (variable {\tt a})!\\
+
+\noindent
+{\bf Exercise}\\
+
+\noindent
+Fix this error!\\
+
+\noindent
+The error you just encountered is called a \emph{syntactic} error, and occurs at compile time. There is an error in the syntax of the code and this cannot be understood by the Java compiler. Throughout this course you may also encounter \emph{semantic} errors. These are errors where the meaning of the code has been understood by the compiler, but the logic is incorrect. Consider the following:
+
+\begin{verbatim}
+1: public class Test {
+2:    public static void main(String[] args) {
+3:        int a[] = new int[2];
+4:        a[2] = 3;
+5:    }
+6: }
+\end{verbatim}
+
+\noindent
+The code above compiles without error, but when running the program we see that there is an \emph{exception} in the code. Again, Java does a good job telling us about the error:
+
+\begin{verbatim}
+$ javac Test.java
+$ java Test
+Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 2
+at Test.main(Test.java:4)
+\end{verbatim}
+
+\noindent
+The error is in the {\tt main} function in Test.java and is on line 4. The exception that was generated was an ArrayIndexOutOfBoundsException (which you can look up in the Javadoc) and has occurred because we are trying to store a number in a location in the array that is out of bounds. If you remember, when we create an array of a particular size, the last index is $n-1$. Here we're trying to write something into array index 2 (which the error tells us), but the array only contains space for 2 integers, at index 0 and 1.\\
+
+\noindent
+{\bf Exercise}\\
+
+\noindent
+Try writing example applications to perform very simple tasks. While doing this, you will undoubtedly encounter errors and you should now be able to identify exactly where and what the errors are. Try to learn about as many error types as possible and how to fix them, this will benefit you greatly in the future.
+
+

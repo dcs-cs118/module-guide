@@ -1,0 +1,229 @@
+\pagebreak
+\section{Getting Started}
+
+This chapter is intended for use during your first seminar session. Seminars 
+will take place in the programming labs. It 
+is important that you know where you should be each week. {\bf For your first 
+seminar you should meet in the reception area of the Computer Science 
+department building}. You seminar tutor will meet you and take you into 
+one of the labs where you will spend the hour working through 
+the exercises in this chapter. If you are having problems with user accounts 
+then this is a chance to sort these out. 
+
+In subsequent labs you are welcome to enter the lab, log in and get started.
+
+\subsection{UNIX}
+
+All the computers in the Computer Science building run the Linux operating 
+system. We use the Red Hat `flavour' of Linux, though others are available for
+your laptop (e.g. Ubuntu). Linux is a UNIX-like operating system commonly used
+in computing industries, especially on server systems where stability and security
+are key. 
+
+You will certainly need to pick up some UNIX skills while you are at 
+Warwick. One way to start is to buy a copy of the excellent 
+{\em Introducing UNIX and Linux} by the very distinguished authors Joy, 
+Jarvis and Luck. \\
+
+$\diamondsuit$ 
+I would suggest that you have a look at this book and study the chapter titled
+`Getting Started', though I would personally ignore the 
+direction to the text editor known as {\em vi} and also the section on 
+electronic mail using {\em mailx}.
+
+\subsubsection{Login}
+
+When you log in to the computers you will enter a windows-like
+environment. There are a number of other {\em Session} environments that you
+can select from the log-in screen, but this guide is written from the 
+point of view of the {\em Default} session and so I can assume no 
+responsibility for problems outside of this domain. 
+
+\subsubsection{Mail}
+
+$\diamondsuit$
+You do not have a mailbox on the CS system. All email will be sent to your
+University mail account, which you can access from the web using the University's
+live mail service: 
+
+{\tt http://go.warwick.ac.uk/mymail}
+
+\subsubsection{The Internet}
+
+$\diamondsuit$
+You can invoke a web browser
+(the default is Google Chrome) by navigating through the menu in the bottom left-hand corner.
+
+While you are here you should find the course web-page. 
+
+{\tt http://go.warwick.ac.uk/cs118/} 
+
+I would suggest that you {\em Bookmark This Page}.
+
+{\bf Any important announcements will be made in lectures and posted to the course webpage.}
+
+\subsubsection{Editing files}
+
+Red Hat contains a number of text editing tools. One of these, called
+{\em kwrite}, is available from the desktop and will be our editor of 
+choice. Other editing tools can be found from the Red Hat window manager, or
+run from a terminal window. When working remotely in a terminal environment, you
+may like to try out {\em nano}.
+
+\subsection{Editing, compiling and running Java code}
+
+$\diamondsuit$ 
+Create a new file which contains the following text:
+
+\begin{verbatim}
+public class Hello { 
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+\end{verbatim}
+
+Make sure you copy the program exactly (the capitalisation is important). 
+Save the program as {\tt Hello.java} (again, capitalisation is important!) 
+in a folder of your choice (Note: you
+will need to navigate to this folder in the terminal).
+
+$\diamondsuit$ 
+Now compile the program. To do this you need to open a terminal window 
+(select the screen button from the window manager) in which you should type: 
+
+{\tt javac Hello.java} 
+
+If the Java compiler detects any errors, then you must have
+typed the program incorrectly. Correct any errors in the program
+by re-entering the editor, making corrections, and then
+recompiling. 
+
+$\diamondsuit$ 
+Run the program by typing: 
+
+{\tt java Hello} 
+
+The program should display {\tt Hello World!} Congratulations!
+You have just learnt how to edit, compile and run a Java
+program.
+
+\subsubsection{Some easy programs}
+
+$\diamondsuit$ 
+Edit the {\tt Hello.java} program again and change the message
+so that it says something else. You should be able to do this
+without knowing any Java. Save, compile and run it. 
+
+{\bf If at any point you get stuck then ask for some help.}
+
+$\diamondsuit$ 
+Create a new file called {\tt Age.java}. Type the following
+program exactly as it is written:
+
+\begin{verbatim}
+  import java.util.Scanner;
+  public class Age { 
+    public static void main(String[] args) {
+       Scanner sinput = new Scanner(System.in);
+       System.out.println("Enter your age:");
+       int age = sinput.nextInt();
+       int doubleAge = age * 2;
+       System.out.println("How old? That's half way to " + doubleAge + "!");
+    }
+  }
+\end{verbatim}
+ 
+You should note that when you make a new Java file it must
+always end with {\tt .java} and the name which follows the {\tt public 
+class} in the program file must be the same name as the file (including 
+matching capitalisation!). 
+
+This program uses the {\tt nextInt} method of the
+{\tt java.util.Scanner} class. This class makes getting input from the 
+terminal much simpler. It first creates a {\tt Scanner} object, using the 
+Systems input stream ({\tt System.in}), then uses a special method to read
+an integer into a variable.
+
+$\diamondsuit$ 
+The marks for this course might finally be weighted as follows: 
+Coursework 30\%; problem sheets 10\%; final exam 60\%. 
+
+Write a program called {\tt TotalMark.java} that reads in the
+three marks (each out of 100) and writes out the total weighted
+mark\footnote{There are a couple of things which you might like to 
+investigate for this question -- try and find out more about {\em Numeric
+Datatypes} and {\em Numeric Operators} from the lecture notes or textbooks 
+etc.}. You should not have to create more {\tt Scanner} objects as you can use
+the same one multiple times (with successive calls to {\tt nextInt}).
+
+
+\subsection{Some UNIX commands}
+
+In case you have not had time to learn some UNIX skills yet, here are some useful 
+commands that you might like to type into the terminal window. Write next 
+to each what you think the command does: 
+
+\indent
+{\tt ls} 
+
+\indent
+{\tt mkdir test} 
+
+\indent
+{\tt cd test} 
+
+\indent
+{\tt cd ..} 
+
+\indent
+{\tt rmdir test} 
+
+\indent
+{\tt ls -al} 
+
+\indent
+{\tt man ls} 
+
+\indent
+{\tt passwd} 
+
+Use this last command VERY carefully. You should certainly aim to set your
+password to something memorable in this session -- if you are not yet 
+ready to do this, then type Ctrl-C into the 
+terminal window, and this will kill the command. 
+
+
+\subsection{Web-based course material}
+
+$\diamondsuit$ 
+All the course material is available on the Web. Get a web browser
+running on your computer and take a look at the page: 
+
+{\tt http://go.warwick.ac.uk/cs118/} 
+
+If you've missed the first 2 instructions to add this page to your bookmarks, do it now! 
+
+It is strongly recommended that you all spend several hours at a
+terminal during the first two weeks of term getting familiar with
+Linux, the text editor etc. In any event, you should 
+also be spending
+several hours per week writing Java programs. Copy examples out
+of your textbooks, customise them for your own use and experiment
+by trying to write programs of your own. {\bf Learning to program is
+impossible without the practical experience that is gained only by
+sitting down at a computer and doing it.}
+
+\subsection{What next?}
+
+$\diamondsuit$
+This is the end of the first seminar session and if you have gone through the 
+work and signed in with your seminar tutor then you are free to go.
+
+A useful thing to do if you get to the end of these exercises way before 
+the end of the seminar hour is to look at Chapter 5, and also the first part of Chapter 6. 
+This introduces you to the programming environment which you will use for 
+your coursework. 
+ 
+If you decide not to look at this now, then you should put this on your to-do
+list to be completed by the end of week 2 (latest).

@@ -1,0 +1,238 @@
+\documentclass[12pt,a4paper,twoside,fleqn]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fancyeq}
+\usepackage{fancyhdr}
+\usepackage[explicit]{titlesec}
+\usepackage{color}
+\usepackage{longtable}
+%\usepackage[utf8]{inputenc}
+%\usepackage[TS1,T1]{fontenc}
+%\usepackage{fourier, heuristica}
+\usepackage{array, booktabs}
+%\usepackage{graphicx}
+%\usepackage[x11names]{xcolor}
+\usepackage{colortbl}
+%\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{pgfplots}
+\usepackage{enumitem}
+
+\newcommand{\deadlineone}{ {\bf Wednesday 1st November (Week 5)} }
+\newcommand{\deadlinetwo}{ {\bf Friday 8th December (Week 10)} }
+
+\tikzset{
+	treenode/.style = {align=center, inner sep=0pt, text centered,
+		font=\sffamily},
+	arn_n/.style = {treenode, circle, white, font=\sffamily\bfseries, draw=black,
+		fill=black, text width=1.5em},
+	arn_r/.style = {treenode, circle, red, draw=red, 
+		text width=1.5em, very thick},
+	arn_x/.style = {treenode, circle, draw=white,
+		minimum width=1.5em, minimum height=1.5em},
+	cls/.style = { treenode, rectangle, red, draw=red, 
+		text width=1.5em, very thick, minimum width=1.5em, minimum height=1.5em }
+}
+
+% UK English
+\usepackage[UKenglish]{babel}
+\usepackage[UKenglish]{isodate}
+
+% Hyperref
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=black,
+    citecolor=black
+}
+
+% cleveref
+\usepackage[nameinlink]{cleveref}
+
+\crefname{figure}{figure}{figures} % cleveref by default has `fig.'
+\Crefname{figure}{Figure}{Figures}
+
+\crefname{section}{section}{sections} % cleveref by default has `fig.'
+\Crefname{section}{Section}{Sections}
+
+\usepackage[]{FiraSans}
+
+% Palatino (font)
+\usepackage{mathpazo}
+%\usepackage{newpxtext,newpxmath}
+\linespread{1.05}         % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+
+% some format settings
+% for hard-bound final submission, use:
+%\setlength{\oddsidemargin}{4.6mm}     % 30 mm left margin - 1 in
+% for soft-bound version and techreport, use instead:
+\setlength{\oddsidemargin}{-0.4mm}    % 25 mm left margin - 1 in
+\setlength{\evensidemargin}{\oddsidemargin}
+\setlength{\topmargin}{-5.4mm}        % 20 mm top margin - 1 in
+\setlength{\textwidth}{160mm}         % 20/25 mm right margin
+\setlength{\textheight}{237mm}        % 20 mm bottom margin
+\setlength{\headheight}{5mm}
+\setlength{\headsep}{5mm}
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{\medskipamount}
+\renewcommand\baselinestretch{1.2} % thesis format (not needed for techreport)
+% don't let large figures hijack entire pages
+\renewcommand\topfraction{.9}
+\renewcommand\textfraction{.1}
+\renewcommand\floatpagefraction{.8}
+
+\usepackage[nomap]{FiraMono} 
+
+\author{Sara Kalvala, Michael B. Gale, and others.}
+
+
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+
+\titleformat{name=\section}[hang]{}{}{0cm}{%
+	\begin{center}
+		\large Chapter \thesection \\
+		\huge \textsc{#1}
+	\end{center}
+	%\chaptermark{\chapter}
+}
+\titleformat{name=\section,numberless}[hang]{}{}{0cm}{%
+	\begin{center}
+		\huge \textsc{#1}
+	\end{center}
+	%\chaptermark{\chapter}
+}
+
+%\titleformat{\subsection}{format}{label}{0em}{before-code}
+
+\titleformat{\subsection}
+	{\bfseries\large}
+	{\llap{\parbox{1.5cm}{\thesubsection\hfill}}#1}
+	{0em}
+	{\bfseries}
+
+\titleformat{\subsubsection}
+{\bfseries}{\llap{\parbox{1.5cm}{\thesubsubsection\hfill}}#1}{0em}{\bfseries}
+
+
+% misc. commands
+\newcounter{TaskCounter}
+
+\newcommand{\question}[1]{\vspace{-0.7cm}{\footnotesize \emph{#1}} \vspace{0.25cm}}
+\newcommand{\topics}[1]{\vspace{-0.5cm}{\footnotesize \emph{Goals}: #1} \vspace{0.25cm}}
+\newcommand{\task}[2][]{\indent\llap{\parbox{1.5cm}{\refstepcounter{TaskCounter}\label{#1}{\firamedium Ex\theTaskCounter}\hfill}}#2}
+\newcommand{\solution}[2]{\indent\llap{\parbox{1.5cm}{\textbf{Ex#1}\hfill}}#2}
+\newcommand{\taskLine}{\bigskip\hrule\bigskip}
+
+
+
+% titles, dates, etc. of lectures and labs
+%\input{topics.tex}
+
+\begin{document}
+\fancypagestyle{empty}{\fancyhf{}}
+\pagestyle{empty}
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\input{titlepage.tex}
+
+\cleardoublepage
+\setcounter{page}{1}
+
+\fancyhf{}
+\fancyhead[LE, RO]{\emph{Programming for Computer Scientists (CS118)}}
+\fancyhead[LO, RE]{\emph{Sara Kalvala \& Michael B. Gale}}
+%\fancyhead[RE,LO]{Guides and tutorials}
+%\fancyfoot[CE,CO]{\leftmark}
+\fancyfoot[LE,RO]{\thepage}
+\pagestyle{fancy}
+
+\tableofcontents
+
+\newpage
+
+\input{chapter1.tex}
+\input{chapter2.tex}
+\input{chapter3.tex}
+\input{chapter4.tex}
+\input{chapter5.tex}
+\input{chapter6.tex}
+\input{chapter7.tex}
+\input{chapter8.tex}
+\input{chapter9.tex}
+
+%\input{overview.tex}
+%\input{books.tex}
+%\input{timeline.tex}
+%\input{coursework.tex}
+%\input{exam.tex}
+%\input{guidance.tex}
+
+%\clearpage 
+%\section{Lecture notes}
+
+%\subsection{Lecture 10: \lectureTenTitle}
+%\label{sec:lecture-10}
+
+%\input{lecture10.tex}
+
+
+
+%\clearpage
+%\section{Exercises}
+
+%\input{lectures/lecture1.tex}
+%\input{lectures/lecture2.tex}
+%\input{labs/lab1.tex}
+
+%\input{lectures/lecture3.tex}
+%\input{lectures/lecture4.tex}
+%\input{labs/lab2.tex} \newpage
+
+%\input{lectures/lecture5.tex}
+%\input{lectures/lecture6.tex}
+%\input{labs/lab3.tex}
+
+%\input{lectures/lecture7.tex}
+%\input{lectures/lecture8.tex}
+%\input{labs/lab4.tex}
+
+%\input{lectures/lecture9.tex}
+%\input{lectures/lecture10.tex}
+%\input{labs/lab5.tex} \newpage
+
+%\input{lectures/lecture11.tex}
+%\input{lectures/lecture12.tex}
+%\input{labs/lab6.tex} \newpage
+
+%\input{lectures/lecture13.tex}
+%\input{lectures/lecture14.tex}
+%\input{labs/lab7.tex} \newpage
+
+%\input{lectures/lecture15.tex}
+%\input{lectures/lecture16.tex}
+%\input{labs/lab8.tex} \newpage
+
+%\input{lectures/lecture17.tex}
+%\input{lectures/lecture18.tex}
+%\input{labs/lab9.tex}
+
+%\input{lectures/lecture19.tex}
+
+%\clearpage
+%\section{Solutions and how to find them}
+
+%This section contains model answers for selected exercises along with descriptions of how I obtained them.
+
+%\input{labs/sol3.tex}
+
+\end{document}

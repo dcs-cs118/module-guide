@@ -1,0 +1,243 @@
+\clearpage
+\section{Coursework 2 (Part 2): \\
+         The Grand Finale}
+
+The exercises in this chapter are designed to test the very best of you. 
+Although it should be said that it is 
+possible to get a good grade in the practical component of the CS118 
+course without having done the exercises in this chapter; 
+this means that if you do 
+not get a chance to finish this part then you should not panic. You may 
+however find the exercises interesting and decide that you have time to 
+attempt some or all of the questions provided. Even if you do not complete 
+the exercises, you might get some marks for trying. So even if your robot 
+is a bit wonky, you may still gain credit for a part solution. \\
+
+\noindent
+In this second part of Coursework 2 you are required to design, build and 
+test a {\em learning robot}. You will receive much less step-by-step 
+guidance and as a result I expect to see lots of exciting and innovative 
+solutions. Your solutions will be marked on design, programming style and 
+of course correctness\footnote{If your program works then you can be 
+assured of at least 60\% of the marks, if you have a smart design then 
+you will bank a further 20\%, and if you have programmed like a coding god 
+then you can expect the remaining 20\% of the marks.}.\\
+
+\noindent
+The programs which you will write for this section are probably the most 
+interesting in this course. You will produce some very clever robot 
+controllers as answers to the questions. It can also be very satisfying to 
+watch the more advanced robots in action. \\
+
+\noindent
+As a consequence of the work being more difficult, you will receive extra 
+credit for any work you do from this chapter. It is very difficult to quantify
+exactly what this means in terms of {\it your} marks, as other factors such as 
+programming style, reusability, etc. will play a part. However, you might 
+like to think of these exercises as constituting the difference between an 
+{\em A} grade and a {\em B} grade in your coursework (depending on 
+where the grade boundaries are drawn). \\
+
+\noindent
+This year there will also be a prize for the person who develops the 
+best solution. You could win this by going beyond the specification, or
+perhaps you could produce the shortest solution to the grand finale\footnote{The current
+record for shortest solution is 5 lines of code, including all of the Java filler! Though a submission
+of 30 lines or below would be very impressive for first year students.}. Previous
+winners have also turned the maze environment into a game, and created interesting 
+graphical displays to show the maze-tree as it was being explored.
+
+\subsection{The {\it Grand Finale}}
+
+You receive a call from NASA. They have seen your robot in action and plan 
+to use some of your code in their next mission\footnote{Heaven forbid.}. 
+However, while it is clear that your robot searches in a very sophisticated 
+way, NASA point out that it does not learn from its mistakes\footnote{Unlike
+NASA, of course.}. What they would like is a robot that learns. \\
+
+\noindent
+$\diamondsuit$ The aim of this last part is to build a {\bf learning robot} that can use 
+information gathered during previous runs through a maze to find a target at 
+increasing speed. \\
+
+\noindent
+The plan is to build on your previous solution. The robot will
+search the maze (in its {\bf Explorer}-like way) the {\em first time} 
+the robot is run through a maze but, 
+the {\em second time}\footnote{or more} the robot is run, it will use its 
+virtual map (its memory if you like) to find the target more quickly.
+What you would expect the robot to do the second time round is exclude the 
+routes through the maze which went nowhere and instead select those which
+it knows will take it towards the target. \\
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=4.5in]{finale1.eps}
+\caption{A trace of the {\bf GrandFinale} robot the first run through the 
+maze.
+\label{finale1}}
+\end{figure}    
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=4.5in]{finale2.eps}
+\caption{A trace of the {\bf GrandFinale} robot the second time it 
+runs through the maze.
+\label{finale2}}
+\end{figure}    
+
+\noindent
+An example of this behaviour is demonstrated in Figures~\ref{finale1} 
+and~\ref{finale2}. In Figure~\ref{finale1} we see the trace of the robot the 
+first time it is run through a fairly extensive maze. As you would expect it 
+is fairly thorough about the areas which it explores, 
+finally however it reaches the target.\\
+
+\noindent
+When the robot is run again, shown in Figure~\ref{finale2}, the robot can 
+use the information which it stored about the maze during the first run to 
+direct its search for the target. As you see it needs far less exploration 
+the second time round. The aim of the second part of Coursework 2 is to 
+model this behaviour. \\
+
+\noindent
+There is more than one way of doing this and in order to provide you with 
+some (modest) assistance I shall describe two approaches which you might 
+like to take. I do not mind which of these you go for, if any.
+
+\subsection{Route A}
+
+$\diamondsuit$
+Modify {\bf Explorer} so that it records the junctions (if any) 
+that each known junction's exit(s) lead to. Test that your program stores the
+correct information by temporarily modifying it to print the information on
+the screen and comparing the results with the layout of small test mazes.
+The information gathered should be retained between runs in the same maze.\\
+
+\begin{figure}
+\centering
+\includegraphics[width=3.8in]{junc_info.eps}
+\caption{Storing more junction information.\label{7.1}}
+\end{figure}
+
+\noindent
+You may wish to experiment with the use of complex data structures
+or arrays of arrays
+to record this information in a conveniently accessible form. Figure~\ref{7.1}
+shows the sort of data structure which you will need and the extra information
+which you are likely to store. Note that as well as storing the 
+direction from which the robot entered a junction, the controller also stores 
+the junction 
+which taking a {\tt LEFT}, {\tt RIGHT}, {\tt BEHIND} or {\tt FORWARD} path 
+would lead to. \\
+
+\noindent
+In the figure you will see that the array index at which the information relating
+to a particular junction is stored, provides a very
+convenient means of identifying that junction. Since these identifying
+integers will be positive (or zero), exits which have yet to be explored can
+be represented as a negative number. Remember that a method is
+provided which tells you whether you are computing the first run
+in a maze, and using this you can detect whether the maze has changed since 
+the previous runs. \\
+
+\noindent
+The second task is to
+design, build and test a method which uses the information collected by
+the controller to compute a route between the start and end of the maze. \\
+
+\noindent
+My advice here is to think first and implement second! Consider how you might
+represent and compute such a route. Give yourself time to think. Go away from
+the computer, with pencil and paper (or coffee, or beer, whatever...) to 
+design a good scheme. Then try to implement and test your ideas. If inspiration
+fails to strike even after thinking hard, your seminar tutor will be able to
+offer a hint or two. There are quite a number of possible methods which you could
+use, and each can be implemented as a computer program in many different
+ways. So, don't panic if your solution sounds completely different to that 
+offered by the seminar tutor -- the chances are that you are both right. \\
+
+\noindent
+Save your working implementation to this exercise in the file 
+{\tt GrandFinale.java}.
+
+\subsection{Route B}
+
+$\diamondsuit$
+There is a solution to this problem which many perceive as simpler to that 
+presented in Route A. This route is based on your answer to Exercise 2 and 
+so you might like to remind yourself what that was about.\\
+
+\noindent
+It is possible to store the arrived-from direction and not the x- and 
+y-coordinates of the robot and still build a learning robot. What you need to 
+do in this case is treat the arrived-from directions as a {\em stack} of 
+values. \\
+
+\noindent
+The analogy which is often introduced when describing stacks in Computer 
+Science is a pile of dinner plates. If you imagine this pile, then plates can
+only be introduced at the top of the pile (if you want to avoid any lifting)
+and similarly taking a plate (in this lazy way) means taking one from 
+the top as opposed to anywhere else in the pile. This method of putting 
+things on and taking things off is described as {\em last in first out}, and 
+Computer Scientists use the terms {\em push}ing items onto the stack and 
+{\em pop}ing them off. \\
+
+\noindent
+You can use a stack to record the arrived-from directions of the robot. Each
+time the robot arrives at a junction the arrived-from direction should 
+be pushed onto the stack; when the robot is backtracking the arrived-from 
+directions should be popped off the top of the stack. \\
+
+\noindent
+If you use this approach you will find that by the time the robot reaches
+the target the stack will contain a route to the target. The trick is to 
+then use this stack the next time round to direct the robot straight to the 
+target.\\
+
+\noindent
+Save your working implementation to this exercise in the file 
+{\tt GrandFinale.java}.
+
+\subsection{Submitting your coursework}
+
+The files which should be submitted for the second coursework are {\tt Ex1.java},
+{\tt Ex2.java}, {\tt Ex3.java} and also {\tt GrandFinale.java}.\\
+
+\noindent
+In order to make the marking of your work easier, you should make sure that the
+class names correspond to the file names -- that is, file {\tt Ex2.java} 
+contains the definition \\
+
+{\tt public class Ex2} \\
+
+\noindent
+and similarly for the other files. \\
+
+\noindent
+Submit your working using Tabula, as before. The marking of this coursework will take place on
+\deadlinetwo. Be there or be square\footnote{In fact, be there 
+or get no marks.}.
+
+\subsection{Epilogue}
+
+This coursework has touched on a number of different areas of Computer 
+Science. You have learnt something about {\em specifications} and {\em 
+refinement}, you have learnt something about {\em programming} and 
+{\em software testing}. You will have also touched on {\em data structures}
+and {\em algorithms}, and also {\em AI}. \\
+
+\noindent
+There is much to learn in the remainder of your degree course but this 
+should give you an idea as to how all these areas fit together and how 
+important each is in its own right. \\
+
+\noindent
+Programming is a complicated business and you are not going to have mastered 
+it in ten weeks. It is a bit like learning to drive -- you have probably 
+crashed a few times already, or at least come off the road -- and you 
+will get better the more you do. By the summer many of you will be taking 
+up well paid summer jobs fixing peoples' Java code. This may sound hard to 
+believe right now, but each year it is the same; the only thing that 
+changes is that the wages go up!

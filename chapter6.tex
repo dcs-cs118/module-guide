@@ -1,0 +1,764 @@
+\clearpage 
+\section{Coursework 1 (Part 1): \\ Simple Robots}
+
+The first coursework for CS118 consists of two parts. You will need to 
+complete both parts if you are aiming for a top grade. \\
+
+Your answers to this coursework must be completed by \deadlineone. 
+You will be asked to come in on that day and demonstrate 
+that your code works and that you have understood the material for each of
+the exercises. If we are not able to mark your work on that day, for whatever 
+reason, then you will receive no marks.\\
+
+Your work will of course be marked for functionality, that is the program does 
+what it is supposed to do. It is also useful to remember that the work will 
+be marked for programming style, clarity, re-usability and use of 
+techniques taught throughout the course. This means that even if your code 
+works wonderfully, you may not get fantastic marks if it looks like a 
+dog's dinner. Likewise, if you do not finish all the exercises, but your
+solutions look like a masterpiece, then you are likely to do well. \\
+
+{\bf Cooperation, Collaboration and Cheating}\\
+
+If a submitted program is not entirely your own work, you will be required
+to state this when the work is marked. Any and all 
+collaboration between students
+must be acknowledged, and may result in stricter marking of the work.
+Consultation of textbooks is encouraged, but programs described elsewhere
+should not be submitted as your own, even if alterations are made.
+It will be useful to quote here the University's regulations on the subject:
+
+\begin{quote}
+{\em \ldots `cheating' means an attempt to benefit oneself, or another, by
+deceit or fraud. This shall include deliberately reproducing the work of
+another person or persons without acknowledgement. A significant amount of
+unacknowledged copying shall be deemed to constitute prima facie evidence of
+deliberation, and in such cases the burden of establishing otherwise shall
+rest with the candidate against whom the allegation is made.}
+\end{quote}
+
+\noindent
+Therefore, it is as serious for a student to permit work to be copied as it
+is to copy work. Any assistance you receive must be acknowledged.
+If in doubt, ask. It should also go without saying that you are prohibited 
+from uploading your solutions to the internet.
+
+\subsection{Getting started}
+
+To begin you need to copy the robot-maze environment and 
+the controller software to your home directory. I suggest that you first 
+create a {\tt cs118} directory. Invoke a terminal window and type in 
+this window the UNIX command \\
+
+{\tt mkdir cs118} \\
+
+\noindent
+and then change to this directory using the command {\tt cd cs118}. \\
+
+\noindent
+You should now use a web browser to go to the CS118 course web page 
+(which should be in your bookmarks if you have followed all the instructions
+in Chapter 2). \\
+
+\noindent 
+Under the {\bf Coursework} section of this web page you will see that there 
+are four links, one of which says {\bf Maze software} and one of which says 
+{\bf Dumbo controller}. Click on these with your right mouse button and 
+select the {\em Save Link Target As...} option from the menu. This will allow you 
+to save the file. When you save these files, make sure you double-click on the 
+{\tt cs118} directory so that the file is saved to the appropriate place.
+The {\bf Download Manager} will confirm that the file has been saved and 
+once you have done this for both files, you can check that the files have 
+been saved by typing {\tt ls -l} in your terminal window (you may need to navigate
+to the correct folder using some of the commands you encountered earlier).\\
+
+\noindent
+You should find two new files in this directory. 
+One of these files is a {\tt .jar} file;  
+this postfix means that the file is a Java archive, an 
+efficient ZIP-like file format which allows all the component parts of the 
+robot-maze environment (stored in this file) to take up as little space as 
+possible in your home directory. The other file is a {\tt .java} file 
+like those you created in your first seminar. This {\tt .java} file is the 
+robot controller which interfaces with the robot-maze environment software. \\
+
+\noindent
+The result of the {\tt ls -al} command should look something like this:
+
+\begin{verbatim}
+-rw-------   1 saw   dcsstaff     697 Aug 11 10:32 DumboController.java
+-rw-------   1 saw   dcsstaff   99539 Aug 11 10:32 maze-environment.jar
+\end{verbatim}
+
+\noindent
+If you find that the file size of either of these files is zero
+(this is the number in the fifth column), then something has gone wrong during the 
+downloading. In this case you should try downloading them once again. \\
+
+\noindent
+You need to compile the {\tt .java} file if you are to run it and in order for
+the controller software to run along side the robot-maze environment
+the two programs need to be compiled together. This requires a small 
+addition to the {\tt javac} command which you used in compiling your 
+first Java programs. Type into you terminal window the command \\
+
+{\tt javac -classpath maze-environment.jar DumboController.java} \\
+
+\noindent
+This compiles the controller program {\tt DumboController.java}
+into a corresponding class file ({\tt DumboController.class}). The 
+compilation is performed in the context of the 
+robot-maze environment (through the {\tt -classpath maze-environment.jar} 
+extension) which is just what we want.\\
+
+\noindent
+You can now run the robot-maze environment by typing \\
+
+{\tt java -jar maze-environment.jar \&} \\
+
+\noindent
+The {\tt \&} symbol runs the java command in the background,
+such that it frees the window so that you can still use it for 
+other business. Admire the baroque elegance of the highly sophisticated
+computer graphics in the robot-maze environment program. To change
+the maze, click on the {\tt Generators} button and then on 
+the {\bf PrimGenerator} in the window above. You will see that this fills
+the {\em Current Generator} information panel. If you now click on the 
+{\bf New Maze} button at the bottom right you will 
+get a new maze (generated through an application of Prim's algorithm). \\
+
+\noindent
+Now that you have a maze you need a robot. Click on the {\bf Controllers} 
+button
+and select the {\bf RandomRobotController}. You will see that this configures
+the {\em Current Controller} information panel. \\
+
+\noindent
+The {\bf RandomRobotController} is a pre-installed piece of controller 
+software which drives the direction-choosing capabilities of a basic robot. 
+Before clicking on the {\bf Start} button to test the robot, set the 
+{\bf Speed} gauge to the far right of the screen. \\
+
+\noindent
+When the robot is running you will see that it exhibits some unusual behaviour.
+First you will see the direction change, as indicated by the blue arrow. You 
+will also notice that it leaves a trail (of been-before squares) as it moves 
+through the maze. Occaisionally the robot crashes into a wall 
+(indicated in red), this is because the 
+controller which is being used to drive the robot makes no allowance for 
+where the walls are in the maze. \\
+
+\noindent
+You should familiarise yourself with this environment. See what happens 
+when you increase the speed, try generating new mazes, try editing mazes 
+with your mouse, try moving the location of the target, 
+try changing the dimensions of the maze.
+
+\subsection{Loading controllers}
+
+One of the nice features of the robot-maze environment is 
+the ability to experiment with different controller software. The 
+{\tt DumboController} which you compiled earlier can be loaded into the 
+environment by clicking {\bf Controllers} followed by {\bf Add}.\\
+
+\noindent
+This will provide you with a directory menu from which you should double 
+click on your {\tt cs118} directory. Here you will find your 
+{\tt DumboController.class} file which you can then highlight and {\bf Open}.\\
+
+\noindent
+You will see that this adds the {\tt DumboController} to your list of robot
+controllers. You will use this same process to load all the robot controllers
+which you write during this first piece of coursework.\\
+
+\noindent
+If you click on the {\bf DumboController} in the robot controllers menu, the 
+environment will switch between controllers. Run the new robot controller
+to see if you can work out where {\bf RandomRobotController} and 
+{\bf DumboController} differ.  Try to 
+characterise the strategies which they appear to follow.  You
+may find find it helpful to test the robots on different mazes. \\
+
+\noindent
+It may become obvious that it is not always easy to see exactly what
+strategies these robot controllers appear to follow. It is often quite 
+difficult to reverse engineer from the {\em behaviour} to the 
+{\em specification}. Similarly, it is not good practice to have 
+a specification-less program, as if the user is in any
+doubt as to the behaviour of part of the program, this
+problem can be easily resolved by consulting the specification. 
+
+\subsection{Analysing code}
+
+Use a text editor to look at the source code in the file
+{\tt DumboController.java}.  The method {\tt controlRobot} is the 
+controller part of the code. If you have not already worked it out, study the code and see if 
+you can detect what strategy this control program implements. \\
+
+\noindent
+Note the use of the {\tt import} statement at the 
+top of the program. This is the statement which connects the robot-maze 
+environment with the controller code. The behaviour of this interface was
+described in Chapter 5 and you might like to go back to this chapter and 
+just check what each of the robot methods and constants do. \\
+
+\noindent
+Talk with your friends about this code. Is it clear to you which parts of the 
+code are `pure' Java and which parts come from the interface to the 
+robot-maze environment?
+
+\subsection{Exercise 1}
+
+$\diamondsuit$ An order is received from an existing customer for a modified 
+dumbo robot:
+
+\begin{quote}
+`Could we have a modified robot controller that still chooses directions
+randomly, but avoids crashing into walls.'
+\end{quote}
+
+\noindent
+This description can be identified as the {\em specification of
+requirements} for the new robot which the customer requires. \\
+
+\noindent
+A good software developer will set about solving this problem in a 
+systematic and logical fashion; for example, using the processes of 
+{\it Design}, {\it Build} and {\it Test} which were described in 
+Chapter 3.\\
+
+\noindent
+Designing a new piece of software requires a complete understanding of 
+the problem to hand; you cannot write a program for a problem which you 
+do not understand. To help work out what the specification states, we will 
+break the description up into its constituent parts. 
+
+\begin{itemize}
+
+\item
+The text describes the modified robot as `still choosing directions
+randomly'. This would suggest that the part of the robot control program which
+chooses a random number and then converts this to a direction should stay as 
+it is. 
+
+\item
+The text also states that the robot should `avoid crashing into
+walls'. Sometimes the existing robot controller chooses a random direction
+which will point the
+robot towards a wall. What you need to do is filter out these
+occurrences. This will involve looking to see if the direction chosen
+does point the robot towards a wall, and if so, choosing another
+direction. 
+
+\end{itemize}
+
+\noindent
+A software developer would be right in thinking that the existing 
+{\tt controlRobot} method in the {\tt DumboController.java} file 
+can be reused; 
+there are many similarities between the existing robot 
+controller which you studied in previously and the new robot controller. 
+Your answer to this exercise should therefore be based on the code 
+found in {\tt DumboController.java}. \\
+
+\noindent
+The main difference between the old controller and the new one is that the 
+new controller will prevent the robot from crashing into walls. \\
+
+\noindent
+{\bf Design question 1:}
+How do you think you can detect if the robot is about to crash into a wall? 
+Hint: look at Section \ref{lookmethod} of {\it The Guide}. \\ 
+
+\noindent
+Once you have discovered how to detect for collisions, you will need to
+ensure that the robot controller keeps choosing directions for the 
+robot until a non-wall direction is found. \\
+
+\noindent
+{\bf Design question 2:}
+How do you plan to do this? Hint:
+look at the lecture notes, this guide and any Java books you have to find out
+more about loops. \\
+
+\noindent
+Once you have designed the program you are ready to {\em build} the
+new robot controller. 
+The new robot controller can be built by making modifications 
+to the existing {\tt controlRobot}
+method in the {\tt DumboController.java} file. If you've carefully planned
+how your new robot should work, it should only require about two
+lines of code to be changed or added, so there is no need to get
+carried away, or indeed too daunted by the programming task ahead!\\
+
+\noindent
+After saving the {\tt DumboController.java} file, you should compile the 
+code using the command\\
+
+{\tt javac -classpath maze-environment.jar DumboController.java}\\
+
+\noindent
+to generate a new {\tt DumboController.class} file. 
+Once you have eliminated any fatal,
+compiler-detectable errors, a new class file will be created. 
+The new class file will be detected by the robot-maze software and it will 
+ask you whether you would like to reload this new class; you should 
+press {\bf Yes}; you can now test your new solution. \\
+
+\noindent
+Before you finish this exercise, consider how you would convince the
+customer that you have tested the program and that it fully meets the
+customer's requirements. 
+
+\subsubsection{Performance monitoring}
+
+Now that the robot no longer crashes into walls, it is easier for your
+customer to monitor the robot's behaviour. As a result, you receive
+an email stating that they have noticed some rather unexpected behaviour. \\
+
+\noindent
+While testing the current robot your customer noticed that although
+it seems to choose directions randomly, some directions appear to be selected 
+more often than others. \\
+
+\noindent
+This is a difficult trait to investigate by hand. You could try running your robot 
+slowly and making a note of the directions it chooses, but this is rather 
+painful (and life is too short for such tedium). An alternative 
+approach is to add a logging mechanism, so that the robot keeps a record of which
+direction is selected each time it moves. The idea is that from this 
+log of movements you will be able to analyse the behaviour of the
+robot for a particular maze. \\
+
+\noindent
+The following output is taken from a working solution to this exercise:
+
+\begin{verbatim}
+I'm going forward at a deadend
+I'm going forward down a corridor
+I'm going forward down a corridor
+I'm going forward at a junction
+I'm going backwards at a deadend
+I'm going backwards at a junction
+I'm going backwards at a deadend
+I'm going forward at a junction
+I'm going backwards down a corridor
+I'm going forward at a junction
+I'm going backwards at a deadend
+I'm going forward at a junction
+I'm going forward down a corridor
+I'm going forward down a corridor
+I'm going backwards at a deadend
+I'm going forward down a corridor
+I'm going forward down a corridor
+I'm going forward at a junction
+I'm going backwards at a deadend
+I'm going right at a junction
+I'm going forward down a corridor
+I'm going right at a junction                                                  
+\end{verbatim}
+
+\noindent
+You will see that the first thing that the robot detects (as it begins the 
+exploration of the maze) is that it is at a dead-end and therefore the only 
+thing that it can do in this case is move forward (see Figure~\ref{ex7fig}).\\
+
+\noindent
+Once it has done this, it then detects that it is in a corridor and therefore
+it decides to move forward. The same thing occurs for the third move.\\
+
+\noindent
+After three moves the robot finds itself at a junction, here it decides to go
+forward once more, at which point it reaches a dead-end and can go nowhere but
+backwards. \\
+
+\begin{figure}
+\centering
+\includegraphics[width=4cm]{ex7fig}
+\caption{Coverage through an example maze.\label{ex7fig}}
+\end{figure}
+
+\noindent
+You can follow the route of the robot until the reset button was pressed. You 
+will see that the robot is not particularly efficient (as it is operating in 
+just the same way as the robot in the previous task) but it does
+print out an accurate log which itself might be useful at a later date.\\
+
+\noindent
+It is always simpler to write more complicated software such as this as a 
+series of smaller tasks. We will be building on the results of our previous
+exercises, so make sure that any programming which you do is done in the file 
+{\tt DumboController.java}. \\ 
+
+\noindent
+Consider the first problem of outputting the text which identifies the 
+direction in which the robot is heading, the \\
+
+{\tt I'm going forward} \\
+
+\noindent
+part of the output (again, refer back to Section \ref{lookmethod} of {\it The Guide}!). \\
+
+\noindent
+For the robot controller to print a log of this 
+direction chosen, you need to include an instruction to output
+text. You have already seen such an instruction in the exercises in 
+your first problem sheet. 
+You might want to remind yourself how the
+{\tt System.out.println()} instruction works. Try adding a simple 
+{\tt System.out.println()}
+instruction to your robot controller, one that says ``{\tt I'm going }'',
+or something similar. Compile and run the new robot controller to
+observe its effect. \\ 
+
+\noindent
+Now that your controller outputs some text, you are ready to modify the program
+so that it outputs the {\tt forward}, {\tt backwards}, {\tt left} or 
+{\tt right} as
+required. Producing this output is quite simple using the 
+{\tt System.out.println} instruction; the trick is deciding which of 
+{\tt System.out.println("forward");} or 
+{\tt System.out.println("backwards");} etc. is required. \\
+
+\noindent
+Let's consider the sub-problem of recording the direction chosen.
+We could use the {\tt System.out.print()} to build our output string as we go,
+or we could store {\tt "forward"}, {\tt "backwards"}, etc. in a string and combine
+all variables later. We could even query the direction variable to find which direction
+we have chosen to face and use a conditional statement (hint: such as a {\tt switch})
+to write out the correct part of the sentence. The main point here, is that there are
+many ways to achieve the same goal, try a few and pick your favourite.\\
+
+\noindent
+$\diamondsuit$ Design a program which prints the direction the robot is going in.\\
+
+\noindent
+Once you have designed this part of the program, it may be worth 
+building it and running some tests to make sure that things are working
+correctly. \\
+
+\noindent
+Now you are ready to work on the final part of the software; detecting 
+whether the robot is at a dead-end, in a corridor, at a junction or at a 
+crossroads. Answer the 
+following questions as part of your design: \\
+
+
+\noindent
+{\bf Design question 1:}
+How is it possible for the robot to detect whether it is at a 
+dead-end, in a corridor, at a junction or at a 
+crossroads? \\
+
+\noindent
+{\bf Design question 2:}
+Is there a corresponding method in the maze-environment package which allows 
+this detection to take place?
+Hint: see Section 5.2.3. \\
+
+\noindent
+{\bf Design hint 1:}
+You might like to add an additional variable to you code, {\tt walls} say, in
+which you store the number of walls surrounding the robot. Once you have 
+done this you will want to answer the following design questions: \\
+
+\noindent
+{\bf Design question 3:}
+Where in the control program do you want to declare this variable? Think carefully
+about the required {\bf scope} of the variable.\\
+
+\noindent
+{\bf Design question 4:}
+Where in the control program do you initialise this variable and to what 
+value is it initially set?\\
+
+\noindent
+{\bf Design question 5:}
+What criteria must be fulfilled if values are to be assigned to this 
+variable?\\
+
+\noindent
+{\bf Design question 6:}
+Where in the code is this value inspected and what is the result of this?\\
+
+\noindent
+This should allow you to establish a design for the second part of this 
+program. \\
+
+\noindent
+$\diamondsuit$ Build the
+code and design some test criteria. You might want to look at how you 
+would test the logical paths of your code -- this was previously 
+discussed in Section 3.3 of {\it The Guide}. \\
+
+\noindent
+It is worth noting that the additional code should be about twenty lines 
+long. \\
+
+\noindent
+Once you have thoroughly tested your solution so that you are happy that it meets the 
+required behaviour\footnote{paying careful attention to the layout of the logging output},
+copy your solution to {\tt Ex1.java} (Make sure you change the class name and check your code
+compiles {\bf after} you've done this).
+
+\subsubsection{Assessing performance}
+
+$\diamondsuit$
+Using the logging from the previous exercise, determine whether the customer was 
+correct in stating that the robot chooses some directions more often than others.\\
+
+\noindent
+{\bf Hint:}
+Notice how often the robot goes {\tt LEFT} compared to how often it goes {\tt RIGHT}, and 
+how often the robot chooses to go {\tt AHEAD} compared to how often it goes {\tt BEHIND}. 
+You may find it helpful to run the controller on different mazes. Perhaps even a blank maze?\\
+
+\noindent
+Investigating the bias in choice of directions is difficult by hand. However, 
+what we can do is use some additional code to analyse the log which the robot
+prints out.\\
+  
+\noindent
+We have been supplied with some analysis software (by our sceptical customer).
+Provided that your logging output from the previous exercise is correct, this
+software will count the number of times the robot heads in each of the four 
+directions. \\
+
+\noindent
+You should download this analysis software from the course web page. Here 
+you will find a link to the file called {\tt count.pl}. Right click on this 
+file and {\em Save Link Target As} to save the file in your {\tt cs118} 
+directory, where you have stored your answers to the exercises and the 
+maze environment. Check that the file has been downloaded properly by typing
+the command {\tt ls -al} in a terminal window and inspecting the size 
+of the file. \\
+
+\noindent
+The {\tt count} program will examine your output from Exercise 5 and produce
+a summary of the moves of the robot. For this reason, your output from 
+Exercise 5 must be precisely formatted, otherwise the analysis will not 
+work properly. To run the maze environment alongside the {\tt count} program 
+you should type \\
+
+{\tt java -jar maze-environment.jar | ./count.pl \&}\\
+
+\noindent
+If you are using your own computer for this assignment, with the Windows operating
+system, you will need to download a different count application, and it is used in a slightly 
+different way. Instruction for this are posted on the course web-page.\\
+
+\noindent
+The {\tt | ./count.pl} part of the command tells the computer
+to send your output to the {\tt count} program to be analysed.\\
+
+\noindent
+If you have done everything correctly\footnote{If, for some reason, this 
+does not work, do two things: 1. check that the file you have saved is called
+{\tt count.pl} and if it is not do a {\tt mv x count.pl}, where {\tt x} is the 
+name of the file you saved; 2. make sure that it executes correctly, you 
+can ensure this by typing {\tt chmod u+x count.pl} in the command window.}
+then the robot
+should exhibit the same behaviour as before, but will output some different
+information on the console. This will be the analyser's output, and
+will look something like:
+
+\begin{verbatim}
+Summary of moves: Forward=1 Left=0 Right=0 Backwards=0
+Summary of moves: Forward=2 Left=0 Right=0 Backwards=0
+Summary of moves: Forward=3 Left=0 Right=0 Backwards=0
+Summary of moves: Forward=4 Left=0 Right=0 Backwards=0
+Summary of moves: Forward=4 Left=0 Right=0 Backwards=1
+Summary of moves: Forward=4 Left=0 Right=0 Backwards=2
+Summary of moves: Forward=4 Left=0 Right=0 Backwards=3
+Summary of moves: Forward=5 Left=0 Right=0 Backwards=3
+Summary of moves: Forward=5 Left=0 Right=0 Backwards=4
+Summary of moves: Forward=6 Left=0 Right=0 Backwards=4
+Summary of moves: Forward=7 Left=0 Right=0 Backwards=4
+Summary of moves: Forward=8 Left=0 Right=0 Backwards=4
+Summary of moves: Forward=9 Left=0 Right=0 Backwards=4
+\end{verbatim}
+
+\noindent
+Examine whether the summary is actually consistent with the robot's moves. 
+If you find that the output seems wrong, it is most likely that the log of
+movements you printed for the previous exercise 
+has not been formatted correctly. Perhaps you have
+forgotten to add a space character, or your output has a typing error...\\
+
+\noindent
+There is a lesson here in always paying careful attention to the {\em 
+program specification}. It might appear a minor problem to forget a space 
+in a log of robot movements, or you might decide that the output looks nicer
+formatted slightly differently. Either way you are dicing with death. Of 
+course when a human looks at the output of your program then they can make 
+allowances for slight variations in output. When the output is read by another
+computer program however, then we might not have this same flexibility. And
+of course how are we to know who is going to process the output, it could
+be a human today and another computer program tomorrow. So rather than risk
+things going wrong we just stick to the specification. This way we have met 
+our side of the agreement, and if something screws up then this is (hopefully)
+someone else's problem (legal case, prison sentence or whatever).\\
+
+\noindent
+If you run tests on a number of mazes for a sufficiently long period of time, 
+then you might notice some pattern in the directions the robot chooses.
+You should find that the directions chosen by the {\bf DumboController} are 
+indeed random, but that the directions are not chosen with the same 
+probability\footnote{If you 
+did not spot this previously then this is the difference between the {\bf DumboController}
+and the {\bf RandomRobotController}.}. \\
+
+\noindent
+$\diamondsuit$ Investigate the definitions of the {\tt Math.random()} and {\tt Math.round()} methods from
+the Java API. 
+Using this information state the probability of the robot choosing the directions {\em left},
+{\em right}, {\em ahead} and {\em behind}. \\
+
+\noindent
+{\bf Hint:} The Java APIs are an excellent source of code that tens of thousands of 
+programmers draw upon every day. They provide a repository of program code 
+that you can use to construct more complex code. A word of warning though; just because 
+someone else has written the code, doesn't mean that when you employ it you are excused 
+the task of understanding exactly what that code does. Using the {\tt Math.random()} and
+{\tt Math.round()} methods does indeed allow the robot to generate random directions, but 
+probably not in the same way that you first thought. 
+
+\subsection{Exercise 2}
+
+$\diamondsuit$
+After further discussion with your customer they submit a revised specification.
+
+\begin{quote}
+`Could we have a modified robot controller that chooses directions randomly with equal
+probability? The robot should still avoid crashing into walls and should still print a
+log of its movements.'
+\end{quote}
+
+\noindent
+You should base your solution to this exercise on the previous exercise. So make sure
+that you continue working on the {\tt DumboController.java} file. You should also remember
+to keep regular back-ups at this point.\\
+
+\noindent
+{\bf Hint:}
+Review your answer to Exercise 1. There are many ways to accomplish this task; think
+carefully about the use of the {\tt Math.random()} and {\tt Math.round()} functions.
+
+\subsubsection{Improving performance?}
+
+$\diamondsuit$ 
+Use the same method of {\em design}, {\em build} and {\em test} and further 
+modify {\tt DumboController} so that it
+meets the following customer requirements: 
+
+\begin{quote}
+`The robot should only change direction if to carry on ahead would cause 
+a collision. As before, when {\tt DumboController} chooses a
+direction, it should select randomly from all directions which won't
+cause a collision. Directions should be chosen with equal probability and a 
+log should be kept of the robot's movements.'
+\end{quote}
+
+\noindent
+Your solution should be building upon the work you have done previously, so 
+again modify the code in the file {\tt DumboController.java}.
+The modification you are required to make is again very small. These are the 
+design questions which you need to consider: \\
+
+\noindent
+{\bf Design question 1:}
+How will you instruct the robot  
+controller to check {\tt if} there is a wall ahead before it decides to 
+change direction?\\
+
+\noindent
+{\bf Design question 2:}
+What should the controller do if there is a wall ahead of the robot? \\
+
+\noindent
+{\bf Design question 3:}
+What should the controller do if there is not a wall ahead? \\
+
+\noindent
+{\bf Design question 4:}
+Does your controller program work the very first time it is run? What is the
+initial value of the variable {\tt direction}?
+
+%\noindent
+%Copy your answer from {\tt DumboController.java} to the file 
+%{\tt Ex8.java}. You will 
+%notice that you are building and testing your code using the file 
+%{\tt DumboController.java}.
+%This is intended as this allows you to develop code in one file and then 
+%use the files {\tt Ex*.java} as backups,  
+%for marking purposes, and as the code which you finally ship to the customer.
+%Always remember to make comments as you go, as it will be an arduous task
+%adding comments to all of your {\tt Ex*.java} files! Also make sure you rename
+%your classes inside the files such that they compile from the {\tt Ex*.java} file correctly.
+
+\subsubsection{Reaching the end}
+
+You may notice your robot has some issues after implementing the last algorithm.
+To correct this issue, it is decided some elements of randomness will be added
+back into the robot controller. \\
+
+\noindent $\diamondsuit$ 
+Again building on your previous work, modify the controller
+in {\tt DumboController.java}. This time, as
+well as displaying all the previous characteristics, the robot controller 
+should also choose a new direction randomly, on \emph{average} every 1 in 8 moves,
+irrespective of whether there is a wall ahead or not. \\
+
+\noindent
+There are two design questions which need to be considered: \\
+
+\noindent
+{\bf Design question 1:}
+How will you get your robot controller to choose a new direction on
+average every 1 in 8 moves? Hint: you have given this some thought earlier. \\
+
+\noindent
+{\bf Design question 2:} 
+How will you incorporate this into the existing code? Can you combine 
+this new code with your existing {\tt if} statement by employing 
+some boolean algebra? Hint: look at the lecture notes and your textbooks 
+for information on logical operators in Java. \\
+
+\noindent
+Once you have established your design, build the new robot controller. 
+Again, your solution should modify no more than two lines of the
+controller program, so do not get too carried away. \\
+
+\noindent
+One example of the resulting behaviour 
+will be that a robot which is travelling forwards in a straight line will
+occasionally change direction. It may choose to go backwards,
+continue on its original path forwards, or choose a left or a right
+turn if these are available. Can this version of {\bf DumboController} be
+expected to reach the target if given enough time? Test your solution on 
+some suitable examples. \\
+
+\noindent
+Make a copy of your final solution to this exercise by typing \\
+
+{\tt cp DumboController.java Ex2.java}
+
+\subsection{Final words}
+
+You may have decided while doing the previous exercises that there are many 
+alternative solutions to these problems; you would of course be right. Which
+solution you ultimately choose is a matter of taste, though later in your 
+programming career you may well find that {\em in-house styles} or 
+{\em programming templates} dictate the approach which you use. \\
+
+\noindent
+Think about an alternative approach to solving one of the previous exercises. 
+Why is your alternative solution better and why?\\
+
+\noindent
+{\bf Important note}\\
+
+\noindent
+Before moving onto Part 2, ensure you have correctly renamed all of your files and classes ready for submission. The marking process for this module is partially automated and any compile errors will result in a loss of marks. Additionally, ensure that you haven't accidentally pasted rubbish into your files by accidentally hitting the middle click button.
+
+
