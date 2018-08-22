@@ -22,9 +22,19 @@
 \usetikzlibrary{arrows}
 \usepackage{pgfplots}
 \usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{minted}
+\usepackage[
+backgroundcolor = gray!5
+, hidealllines=true
+]{mdframed}
 
-\newcommand{\deadlineone}{ {\bf Wednesday 1st November (Week 5)} }
-\newcommand{\deadlinetwo}{ {\bf Friday 8th December (Week 10)} }
+\surroundwithmdframed{minted}
+\usemintedstyle{lovelace}
+
+\newcommand{\lectureOne}{The first lecture will take place on Monday of Week 1 at 11am in L3.}
+\newcommand{\deadlineone}{ {\bf 9am on Wednesday 31st October (Week 5)}}
+\newcommand{\deadlinetwo}{ {\bf 9am on Friday 7th December (Week 10)}}
 
 \tikzset{
 	treenode/.style = {align=center, inner sep=0pt, text centered,
@@ -131,7 +141,7 @@
 \newcommand{\solution}[2]{\indent\llap{\parbox{1.5cm}{\textbf{Ex#1}\hfill}}#2}
 \newcommand{\taskLine}{\bigskip\hrule\bigskip}
 
-
+\newcommand{\javaIn}[1]{\mintinline[fontsize=\small]{java}{#1}}
 
 % titles, dates, etc. of lectures and labs
 %\input{topics.tex}

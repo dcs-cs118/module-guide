@@ -1,66 +1,92 @@
 \clearpage
 \section{Introduction to Java}
 
-This chapter should serve as a Java reference throughout this course (and perhaps the CS126 course later this academic year). In this chapter the basic building blocks of Java programs will be outlined, with some short examples interspersed. If you have a question related to your coursework or exercise sheets, you should consult this chapter before asking for help from your seminar tutor.
+This chapter is a short introduction to Java that you can use to get started with some of the basic principles of the language. We outline the basic building blocks of Java programs and intersperse them with some short exercises. If you have a question related to Java, you could quickly consult this chapter before asking for help from elsewhere (\Cref{sec:how-to-get-help}).
 
-Before we start discussing the ins and outs of Java, it's good to have a basic template in which to write all your code. Everything in Java is contained within a ``class'' (something that will be discussed fully later) and when a program is executed, as you will have done in Chapter 2, the Java environment looks for a particular method for an entry point to your code. For this quick introduction, you should create a file with the .java extension, and you should create a class in this file with a {\tt main} method. The \emph{main} method you write should have a specific function signature, where it should be declared {\tt public}, {\tt static} and {\tt void}, and it should have a single parameter that is an array of String objects. Specifically, your initial class declaration should look something like this,
+Before we cover the ins and outs of Java, it's good to have a basic template in which to write all your code. Everything in Java is contained within a ``class'' (something that will be discussed fully later). When a program is executed, as you will have done in Chapter 2, the Java environment looks for a particular method for an entry point to your code. For this quick introduction, you should create a file with the \texttt{.java} extension, and you should create a class in this file with a method named \javaIn{main}. The \javaIn{main} method you write should have a specific signature, where it should be declared \javaIn{public}, \javaIn{static} and \javaIn{void}, and it should have a single parameter that is an array of \javaIn{String} objects. Specifically, your initial class declaration should look something like this:
 
-\begin{verbatim}
+\begin{minted}{java}
 public class MyClass {
-public static void main(String[] args) {
-...
+    public static void main(String[] args) {
+        // your code here
+    }
 }
-}
-\end{verbatim} 
+\end{minted} 
 
-After writing some logic in your main function, you can compile and execute the program as before.
+After writing some statements in your \javaIn{main} method, you can compile and execute the program as before.
 
 \subsection{Variables}
 
-In Java, we can use variables to store data, such that it can be reused or changed. Variable must be declared prior to their use and are given a symbolic name, and a \emph{type}. In this course you will use three forms of variables: \emph{primitive} variables, \emph{object} variables and \emph{arrays}.
+In Java, we can use variables to store data, such that it can be reused or changed. Variables must be declared prior to their use and are given a name, and a \emph{type}. In this module, we cover three categories of types: \emph{primitive} types, \emph{objects}, and \emph{arrays}.
 
 \subsubsection*{Primitives}
 
-\noindent
-Java contains 8 primitive types that are the building blocks of all other types in Java. There are four \emph{integer} types, two {real} types, a character type and a boolean type. Specifically the primitive Java types are:
+Java contains eight primitive types that are the building blocks of all other types in Java. There are four \emph{integer} types, two \emph{floating point} types, a character type and a boolean type. Specifically the primitive Java types are:
 
-\begin{description}[style=multiline,leftmargin=2cm,font=\normalfont]
-	\item[\tt byte] 8-bit integer type that can represent values between $-2^7$ and $2^7-1$. 
-	\item[\tt short] 16-bit integer type that can represent values between $-2^{15}$ and $2^{15}-1$.
-	\item[\tt int] 32-bit integer type that can represent values between $-2^{31}$ and $2^{31}-1$.
-	\item[\tt long] 64-bit integer type that can represent values between $-2^{63}$ and $2^{63}-1$.
-	\item[\tt float] 32-bit floating point type that can store approximately 6 digits of precision.
-	\item[\tt double] 64-bit floating point type that can store approximately 15 digits of precision.
-	\item[\tt char] 16-bit type that can represent any character in the UTF-16 character set.
-	\item[\tt boolean] a type that can represent either {\tt true} or {\tt false}.
-\end{description}
+\begin{center}
+\begin{tabular}{c|p{0.6\textwidth}}
+	\textbf{Type} & \textbf{Description}  \\ 
+	\hline 
+	\javaIn{byte} & 8-bit integer type that can represent values between $-2^7$ and $2^7-1$. \\ 
+	\javaIn{short} & 16-bit integer type that can represent values between $-2^{15}$ and $2^{15}-1$. \\ 
+	\javaIn{int} & 32-bit integer type that can represent values between $-2^{31}$ and $2^{31}-1$. \\ 
+	\javaIn{long} & 64-bit integer type that can represent values between $-2^{63}$ and $2^{63}-1$. \\ 
+	\javaIn{float} & 32-bit floating point type that can store approximately 6 digits of precision. \\ 
+	\javaIn{double} & 64-bit floating point type that can store approximately 15 digits of precision. \\
+	\javaIn{char} & 16-bit type that can represent any character in the UTF-16 character set. \\ 
+	\javaIn{boolean} & a type that can represent either \javaIn{true} or \javaIn{false}.
+\end{tabular} 
+\end{center}
 
-After deciding on an appropriate type, a variable needs a name, and possibly an initial value. The variable name can be any string of characters and number but cannot start with a number. Furthermore, variables can contain the underscore character ({\tt \_}) and a dollar sign ({\tt \$}), though its generally advised to not use dollar, and to not start a variable name with an underscore. Some names are also reserved; for example, a variable called {\tt int} would be incredibly confusing to the Java compiler, as well as a programmer.\\
+To declare a variable, we need to choose  an appropriate type, a name, and optionally an initial value. The variable name can be any string of alphanumeric characters, but cannot start with a numeral character. Furthermore, variables can contain the underscore character (\javaIn{_}) and a dollar sign (\texttt{\$}). 
 
-Finally, a variable must be given a value before being used in subsequent statements. Variables are assigned using the \emph{assignment operator}, {\tt =}. Unlike in the world of mathematics, in most programming languages the value on the right, is assigned to the variable named on the left. For example $(1 + 2) \times 3 = x$ would be written in Java as: \\
+\begin{minted}{java}
+// a variable named x with no intial value
+int age;  
 
-\indent
-{\tt int x = (1 + 2) * 3;}\\
+// a variable named y with an initial value of 42
+int answer = 42; 
 
-\noindent
-{\bf Exercise}\\
+// a variable that stores the character 'a'
+char c = 'a'; 
 
-\noindent
-Think about what each type above might be used for, e.g., the worlds population would require a {\tt long}, as it exceeds the range of an {\tt int}.\\
+// a variable that stores a floating point number
+float myExamAverage = 89.5;  
 
-\noindent
-The radius of the earth is approximately 6,371 km; the population is approximately 7,046,000,000 people. Try writing some Java statements to calculate the population density of the earth.
+// a variable that stores a boolean value 
+bool result = false;
+\end{minted}
 
-\begin{verbatim}
-long population = 7046000000;
-int earthRadius = 6371000;
-double pi = Math.PI;
-double surfaceArea = ...
-\end{verbatim}
+Keywords, such as \javaIn{int}, \javaIn{void}, etc. cannot be used as names for variables since it would be incredibly confusing to the Java compiler, as well as a programmer. 
 
-\subsubsection*{Objects}
+Before a variable's value can be accessed, it must be given one. The value of a variable can be assigned or changed with the \emph{assignment operator}, \javaIn{=}. Unlike in the world of mathematics, in imperative programming languages the value on the right is assigned to the variable named on the left. For example assigning $(1 + 2) \times 3$ to \javaIn{x} would be written in Java as: 
 
-There will be a more in-depth discussion of objects later in this guide, but one object variable you will come across is the String type. Object variable types usually start with a capital letter and are built from primitive variables. For instance, the String type stores all its data in arrays of {\tt char} types. Interaction with object types is usually done using the methods contained within the class. For example,
+\begin{minted}{java}
+// initialise a variable with the result of (1+2)*3
+int x = (1 + 2) * 3;
+
+// change the value of x to the result of 1+2*3
+x = 1 + 2 * 3;
+\end{minted}
+Note that when assigning a new value to an existing variable, we do not have to specify its type since the Java compiler already knows what the type of \javaIn{x}. If we did specify the type again, the Java compiler would see as an attempt to declare a new variable with the same name as an existing one and we would receive an error.
+
+\taskLine 
+
+\task{Think about what each type above might be used for. What type of variable would you use to store the radius of the earth, which is approximately 6,371 km.}
+	
+\taskLine 
+	
+\task{What type of variable would you use to store the number of people in the world? There are approximately 7,046,000,000 people. }
+
+\taskLine 
+
+\task{Try writing and running a Java program to calculate the population density of the earth. The answer should be roughly 1,105,949 people per kilometre.}
+
+\taskLine 
+
+\subsubsection{Objects}
+
+There will be a more in-depth discussion of \emph{objects} later in this guide, but one type of object you will come across is \javaIn{String}. Object variable types usually start with a capital letter and are built from primitive variables. For instance, the String type stores all its data in arrays of {\tt char} types. Interaction with object types is usually done using the methods contained within the class. For example,
 
 \begin{verbatim}
 String s = "THIS IS A STRING";
@@ -575,3 +601,26 @@ The error is in the {\tt main} function in Test.java and is on line 4. The excep
 Try writing example applications to perform very simple tasks. While doing this, you will undoubtedly encounter errors and you should now be able to identify exactly where and what the errors are. Try to learn about as many error types as possible and how to fix them, this will benefit you greatly in the future.
 
 
+\subsubsection{Generating random numbers}
+
+The Java method {\tt Math.random()} returns a random floating point number 
+greater than or equal to $0.0$ and less than $1.0$. The number
+returned is computed so as to ensure that every number appears with
+equal probability. \\
+
+\noindent
+To generate random numbers (almost!) uniformly distributed
+between $0$ and $n$ you will need to take the result, multiply it by $n$, 
+round it to the nearest integer (using {\tt Math.round()}), and then  
+cast the result to an {\tt int} value, e.g. \\
+
+{\tt int result = (int) Math.round(Math.random()*n);} \\
+
+\noindent
+So, the code \\
+
+{\tt randno = (int) Math.round(Math.random()*3);} \\
+
+\noindent
+for example, will assign a random integer value between 0 and 3 inclusive 
+(that is one of four distinct possibilities) to the variable {\tt randno}.
